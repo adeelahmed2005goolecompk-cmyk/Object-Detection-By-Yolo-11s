@@ -301,11 +301,16 @@ You should see CLI help.
 **11. Folder structure after running**
 
 project/
- ├── image.jpg
- ├── runs/
-     └── detect/
-          └── predict/
-               └── image.jpg
+
+image.jpg
+
+runs/
+
+detect/
+
+predict/
+
+image.jpg
 
                
 # Qno5 What is the image classification?
@@ -712,19 +717,17 @@ Example:
 
 dataset/
 
- ├── images/
+images/
 
- │   ├── train/
+train/
  
- │   └── val/
+val/
+
+labels/
  
- │
- 
- └── labels/
- 
-   ├── train/
+train/
      
-   └── val/
+val/
 
 Example:
 
@@ -788,41 +791,33 @@ Full Pipeline
 
 dataset/
 
-│
+images/
 
-├── images/
+train/
 
-│   ├── train/
+img1.jpg
 
-│   │   ├── img1.jpg
+img2.jpg
 
-│   │   ├── img2.jpg
+val/
 
-│   │
+img3.jpg
 
-│   └── val/
+img4.jpg
 
-│       ├── img3.jpg
+labels/
 
-│       ├── img4.jpg
-
-│
-
-└── labels/
-
-   ├── train/
+train/
     
-   │   ├── img1.txt
+img1.txt
     
-   │   ├── img2.txt
+img2.txt
+   
+val/
     
-   │
-    
-   └── val/
-    
-   ├── img3.txt
+img3.txt
         
-   ├── img4.txt
+img4.txt
 
 Image name and label name must be same
 
@@ -1065,20 +1060,27 @@ Numbers are normalized (0–1).
 **4** Dataset Folder Structure (IMPORTANT)
 
 dataset/
-│
-├── images/
-│   ├── train/
-│   └── val/
-│
-└── labels/
-    ├── train/
-    └── val/
+
+images/
+
+train/
+
+val/
+
+labels/
+
+train/
+
+val/
+
 
 Example:
 
 dataset/
- ├── images/train/img1.jpg
- ├── labels/train/img1.txt
+
+images/train/img1.jpg
+ 
+labels/train/img1.txt
 
 Image and label names must match.
 
@@ -1135,14 +1137,20 @@ That's the complete custom object detection dataset preparation workflow.
 **1** Dataset Structure
 
 dataset/
-│
+
+
 ├── images/
-│   ├── train/
-│   └── val/
-│
-└── labels/
-    ├── train/
-    └── val/
+
+train/
+
+val/
+
+labels/
+
+train/
+        
+val/
+
 Example:
 
 images/train/img1.jpg
@@ -1328,6 +1336,7 @@ That’s it:
 **1**	Load best.pt 
 
 **2**	Pass image/frame 
+
 **3**	Show results[0].plot()
 
 
@@ -1376,14 +1385,19 @@ This means:
 Dataset Structure
 
 dataset/
-│
-├── images/
-│   ├── train/
-│   └── val/
-│
-└── labels/
-    ├── train/
-    └── val/
+
+images/
+
+train/
+
+val/
+
+labels/
+
+train/
+    
+val/
+
 Example:
 
 images/train/img1.jpg
@@ -1469,7 +1483,8 @@ Here are popular object detection model names. These are widely used in computer
 
 Two-Stage Object Detection Models
 
-   (accurate but slower)
+(accurate but slower)
+
 •	R-CNN 
 
 •	Fast R-CNN 
@@ -1482,7 +1497,8 @@ Two-Stage Object Detection Models
 
 One-Stage Object Detection Models
 
-   (fast and real-time)
+(fast and real-time)
+
 •	YOLO 
 
 •	SSD 
@@ -1602,6 +1618,7 @@ Detection → Tracking → Assign IDs → Class grouping → Counting
 **Ans** BoT-SORT is a multi-object tracking algorithm.
 
 It is used after object detection to track objects across video frames.
+
 So:
 
 •	YOLO → detects objects 
@@ -1610,7 +1627,7 @@ So:
 
 What BoT-SORT does
 
-  Example video:
+Example video:
 
 Frame 1:
 
@@ -1673,9 +1690,13 @@ from ultralytics import YOLO
 model = YOLO("yolov8n.pt")
 
 results = model.track(
-    source="video.mp4",
-    tracker="botsort.yaml",
-    show=True
+
+   source="video.mp4",
+    
+   tracker="botsort.yaml",
+    
+   show=True
+   
 )
 
 This will:
@@ -2103,3 +2124,540 @@ Finally, we use the trained model on new images. The model will:
 Conclusion (Short Form)
 
 Instance segmentation on a custom dataset involves collecting data, annotating masks, preparing the dataset, training a model like Mask R-CNN, and then using it to predict objects with pixel-level accuracy.
+
+
+
+
+# HERE ARE THE SOME CODES WITH LITTLE THEORY ABOUT YOLO 11ns...
+
+
+**THESE CODES ARE ONLY FOR BRAIN TUMOR DETECTING**
+
+
+## JSON to YOLO Annotation Converter
+
+**Overview**
+
+This project provides a Python script to convert annotation data from JSON format (COCO-style) into YOLO format. This is useful when preparing custom datasets for training YOLO-based object detection models.
+
+**Objective**
+
+The main goal of this code is:
+
+- Read multiple JSON annotation files
+
+- Extract image and bounding box information
+
+- Convert bounding boxes into YOLO format
+
+- Save labels as `.txt` files
+
+**Input**
+
+The script takes:
+
+- Multiple JSON files containing:
+
+ - `images`
+
+ - `annotations`
+
+- Each annotation includes:
+
+- Bounding box (`bbox`)
+
+- Image ID
+
+- Category ID
+
+**Output**
+
+- YOLO format `.txt` files
+
+- Each file corresponds to one image
+
+- Saved in the specified output folder
+
+*How It Works (Theory)*
+
+**Read JSON Files**
+
+The script loads multiple JSON files one by one and checks if they exist.
+
+**2. Validate Format**
+
+It ensures the JSON file contains:
+
+- `images`
+
+- `annotations`
+
+If not, it skips the file.
+
+**3. Group Annotations**
+
+Annotations are grouped by `image_id` so each image gets its corresponding bounding boxes.
+
+**4. Extract Image Information**
+
+For each image:
+
+- File name
+
+- Width and height
+
+These are required to normalize bounding box values.
+
+**5. Convert Bounding Boxes to YOLO Format**
+
+COCO format:
+
+[x, y, width, height]
+
+
+YOLO format:
+
+[class_id, x_center, y_center, width, height]
+
+Conversion formulas:
+
+x_center = (x + w/2) / image_width
+
+y_center = (y + h/2) / image_height
+
+w = w / image_width
+
+h = h / image_height
+
+**6. Class ID Adjustment**
+
+- Category ID is converted to zero-based index:
+
+class_id = category_id - 1
+
+**7. Save Label Files**
+
+- One `.txt` file per image
+
+- Each line represents one object:
+
+
+class_id x_center y_center width height
+
+*Usage*
+
+**1. Update JSON file paths:**
+
+*code for example:*
+
+json_files = ["path/to/file1.json", "path/to/file2.json"]
+
+Set output directory:
+
+output_path = "path/to/output/labels"
+
+*Run the script:*
+
+python script.py
+
+*Example Output*
+
+0 0.512345 0.423456 0.234567 0.345678
+
+1 0.623456 0.512345 0.123456 0.234567
+
+**Applications**
+
+Preparing custom datasets for YOLO
+
+Object detection training
+
+Computer vision projects
+
+**Notes**
+
+Ensure JSON format follows COCO structure
+
+Image width and height must be correct
+
+Category IDs should start from 1
+
+
+# CODD No1)
+
+
+```PYTHON CODE
+           [CREATE JSON FILE AND CONVERT INTO YOLO FILE]
+
+
+ import json
+ import os
+
+ json_files = [
+     r"A:\computer_Vision\Yolov8\data\mouse.json",
+     r"A:\computer_Vision\Yolov8\data\train 2.json",
+     r"A:\computer_Vision\Yolov8\data\train 3.json"
+ ]
+
+ output_path = r"A:\computer_Vision\Yolov8\data\labels"
+
+ def convert_json_to_yolo(json_files, output_path):
+     os.makedirs(output_path, exist_ok=True)
+
+     for json_path in json_files:
+         print("Checking:", json_path)
+
+         if not os.path.isfile(json_path):
+             print("NOT FOUND:", json_path)
+             continue
+
+         with open(json_path, 'r') as f:
+             data = json.load(f)
+
+         print("Keys:", data.keys())
+
+         if 'images' not in data or 'annotations' not in data:
+             print("WRONG FORMAT:", json_path)
+             continue
+
+         ann_by_image = {}
+         for ann in data['annotations']:
+             img_id = ann['image_id']
+             ann_by_image.setdefault(img_id, []).append(ann)
+
+         for img in data['images']:
+             img_id = img['id']
+             img_name = img['file_name']
+             width = img.get('width', 1)
+             height = img.get('height', 1)
+
+             annotations = ann_by_image.get(img_id, [])
+             if not annotations:
+                 continue
+
+             txt_name = os.path.splitext(img_name)[0] + '.txt'
+             txt_path = os.path.join(output_path, txt_name)
+
+             with open(txt_path, 'w') as out:
+                 for ann in annotations:
+                     if 'bbox' not in ann:
+                         continue
+
+                     x, y, w, h = ann['bbox']
+
+                     x_center = (x + w / 2) / width
+                     y_center = (y + h / 2) / height
+                     w_norm = w / width
+                     h_norm = h / height
+
+                     class_id = int(ann.get('category_id', 0)) - 1
+
+                     out.write(f"{class_id} {x_center:.6f} {y_center:.6f} {w_norm:.6f} {h_norm:.6f}\n")
+
+             print("CREATED:", txt_path)
+
+convert_json_to_yolo(json_files, output_path)
+```
+
+
+
+# CODE No2)
+
+
+## YOLO Model Training (Custom Dataset)
+
+
+**Overview**
+
+This project demonstrates how to train a YOLO model on a custom dataset using the Ultralytics YOLO framework. The code loads a pre-trained model and fine-tunes it on user-defined data.
+
+*Objective*
+
+The main purpose of this code is:
+
+- Load a pre-trained YOLO model
+
+- Train it on a custom dataset
+
+- Adjust parameters like epochs and image size
+
+- Generate a trained model for object detection
+
+*Technology Used*
+
+- Python
+ 
+- Ultralytics YOLO (YOLOv8/YOLO11)
+
+**Theory**
+
+**1. Load Pre-trained Model**
+
+*The model is initialized using:*
+
+***python for example***
+
+model = YOLO("yolo11n.pt")
+
+yolo11n.pt is a pre-trained model
+
+It already has learned features from large datasets
+
+This process is called transfer learning
+
+**2. Training the Model**
+
+train_results = model.train(
+
+data="data.yaml",
+   
+epochs=20,
+   
+imgsz=120,
+    
+device="cpu"
+
+)
+
+
+**3. Parameters Explanation**
+
+
+*data*
+
+Path to data.yaml file
+
+Contains:
+
+Training and validation paths
+
+Class names
+
+Number of classes
+
+*epochs*
+
+Number of times the model sees the full dataset
+
+More epochs = better learning (but risk of overfitting)
+
+*imgsz (Image Size)*
+
+Size to which all images are resized
+
+Smaller size = faster training
+
+Larger size = better accuracy
+
+*device*
+
+"cpu" → training on CPU
+
+"cuda" → training on GPU (faster)
+
+**4. Training Process**
+
+During training, the model:
+
+Reads images and labels
+
+Predicts bounding boxes and classes
+
+Compares predictions with actual labels
+
+Calculates loss (error)
+
+Updates weights using backpropagation
+
+This process repeats for all epochs.
+
+**5. Output**
+
+After training, the model generates:
+
+Best weights (best.pt)
+
+Last weights (last.pt)
+
+Training logs and metrics
+
+*How to Run!*
+
+Install dependencies:
+
+pip install ultralytics
+
+Run the script:
+
+python train.py
+
+*Example data.yaml*
+
+train: path/to/train/images
+
+val: path/to/val/images
+
+nc: 2
+
+names: ["class1", "class2"]
+
+*Applications*
+
+Object detection
+
+Surveillance systems
+
+Autonomous vehicles
+
+Industrial inspection
+
+**Notes**
+
+Use GPU for faster training if available
+
+Ensure dataset is properly labeled
+
+Adjust epochs based on dataset size
+
+
+```PYTHON CODE
+
+               [TRAINING THE MODEL]
+
+
+from ultralytics import YOLO
+
+model = YOLO("yolo11n.pt")
+
+train_results = model.train(
+     data=r"A:\computer_Vision\Yolov8\demo1\data.yaml",
+     epochs=20,
+     imgsz=120,
+     device="cpu"
+)
+                 THIS METHOD TRAIN ONLY THE MODEL.
+```
+
+
+
+
+
+# CODE No3)
+
+
+## Theory: Loading an Image and Performing Object Detection
+
+This code is used to load a trained YOLO model and perform object detection on a single image. It uses the Ultralytics YOLO library to detect objects and display the results.
+
+**1. Importing the Model**
+
+from ultralytics import YOLO
+
+In this step, we import the YOLO class from the Ultralytics library. This class is used to load trained models and perform prediction.
+
+**2. Loading the Trained Model**
+
+model = YOLO("best.pt")
+
+Here, we load a custom trained model (best.pt).
+
+This file contains learned weights from training
+
+It represents the best-performing model during training
+
+The model is now ready to detect objects
+
+**3. Performing Prediction**
+
+results = model.predict(
+    source="image.jpg",
+    conf=0.1,
+    show=True,
+    save=True
+)
+
+This step performs object detection on the input image.
+
+**4. Parameters Explanation**
+
+*source*
+
+Path to the input image
+
+The model will process this image and detect objects
+
+*conf (Confidence Threshold)*
+
+Minimum confidence score (0.1 = 10%)
+
+Lower value → more detections (may include false positives)
+
+Higher value → fewer but more accurate detections
+
+*show*
+
+Displays the output image with detections
+
+Bounding boxes and labels are shown on screen
+
+*save*
+
+Saves the output image
+
+The detected image is stored in the runs folder
+
+**5. Detection Process (Working)**
+
+When the model runs:
+
+The image is loaded
+
+It is resized and processed
+
+The model predicts:
+
+Object classes
+
+Bounding boxes
+
+Confidence scores
+
+Results are drawn on the image
+
+**6. Output**
+
+The output includes:
+
+Image with bounding boxes
+
+Class labels (e.g., person, car)
+
+Confidence scores
+
+Saved result image
+
+Conclusion (Short Form)
+
+This code loads a trained YOLO model and performs object detection on an image, displaying and saving the results with bounding boxes and labels
+
+
+
+
+```PYTHON CODE
+               [LOADING THE IMAGE]
+
+
+ from ultralytics import YOLO
+
+ model = YOLO(r"A:\computer_Vision\Yolov8\yolo code for pose models\runs\detect\train-3\weights\best.pt")
+
+ results = model.predict(
+     source=r"A:\computer_Vision\Yolov8\demo1\test_images\12.jpg",
+     conf=0.1,
+     show=True,
+     save=True
+)
+```
+
+
+
