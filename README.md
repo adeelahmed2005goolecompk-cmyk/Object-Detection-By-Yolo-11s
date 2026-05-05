@@ -1,6 +1,6 @@
 # OBJECT DETECTION BY YOLO11s.
 
-        ## YOLO 11.
+## YOLO 11.
 
 **1) Introduction**
 
@@ -29,6 +29,8 @@ If you tell me what you're using it for (e.g., drones, CCTV, Python project), I 
 
 
 ### 3) Questions:
+
+
 # Qno1 How to run Yolo 11 on our local computer?
 
 
