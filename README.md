@@ -713,12 +713,18 @@ Example:
 dataset/
 
  ├── images/
+
  │   ├── train/
+ 
  │   └── val/
+ 
  │
+ 
  └── labels/
-     ├── train/
-     └── val/
+ 
+   ├── train/
+     
+   └── val/
 
 Example:
 
@@ -781,24 +787,42 @@ Full Pipeline
 **1** Dataset Structure (REQUIRED)
 
 dataset/
+
 │
+
 ├── images/
+
 │   ├── train/
+
 │   │   ├── img1.jpg
+
 │   │   ├── img2.jpg
+
 │   │
+
 │   └── val/
+
 │       ├── img3.jpg
+
 │       ├── img4.jpg
+
 │
+
 └── labels/
-    ├── train/
-    │   ├── img1.txt
-    │   ├── img2.txt
-    │
-    └── val/
-        ├── img3.txt
-        ├── img4.txt
+
+   ├── train/
+    
+   │   ├── img1.txt
+    
+   │   ├── img2.txt
+    
+   │
+    
+   └── val/
+    
+   ├── img3.txt
+        
+   ├── img4.txt
 
 Image name and label name must be same
 
