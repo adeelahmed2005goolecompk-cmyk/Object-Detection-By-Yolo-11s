@@ -2289,17 +2289,17 @@ convert_json_to_yolo(json_files, output_path)
 
 ## IMAGE NO 1 
 
-![Alt Text](main/mouse.jpg)
+![Alt Text](image/mouse.jpg)
 
 
 ## IMAGE NO 2 
 
-![Alt Text](main/train2.jpg)
+![Alt Text](image/train2.jpg)
 
 
 ## IMAGE NO 3 
 
-![Alt Text](main/train3.jpg)
+![Alt Text](image/train3.jpg)
 
 
 
