@@ -301,16 +301,7 @@ You should see CLI help.
 **11. Folder structure after running**
 
 project/
-
-image.jpg
-
-runs/
-
-detect/
-
-predict/
-
-image.jpg
+image.jpgruns/detect/predict/image.jpg
 
                
 # Qno5 What is the image classification?
@@ -715,19 +706,7 @@ Example:
 
 3. Folder Structure (YOLO format)
 
-dataset/
-
-images/
-
-train/
- 
-val/
-
-labels/
- 
-train/
-     
-val/
+dataset/images/train/val/labels/train/val/
 
 Example:
 
@@ -789,31 +768,17 @@ Full Pipeline
 
 **1** Dataset Structure (REQUIRED)
 
-dataset/
+dataset/images/train/img1.jpg
 
-images/
-
-train/
-
-img1.jpg
-
-img2.jpg
-
-val/
+img2.jpg/val/
 
 img3.jpg
 
-img4.jpg
-
-labels/
-
-train/
+img4.jpg/labels/train/
     
 img1.txt
     
-img2.txt
-   
-val/
+img2.txt/val/
     
 img3.txt
         
@@ -1059,20 +1024,7 @@ Numbers are normalized (0–1).
 
 **4** Dataset Folder Structure (IMPORTANT)
 
-dataset/
-
-images/
-
-train/
-
-val/
-
-labels/
-
-train/
-
-val/
-
+dataset/images/train/val/labels/train/val/
 
 Example:
 
@@ -1136,20 +1088,7 @@ That's the complete custom object detection dataset preparation workflow.
 
 **1** Dataset Structure
 
-dataset/
-
-
-├── images/
-
-train/
-
-val/
-
-labels/
-
-train/
-        
-val/
+dataset/images/train/val/labels/train/val.
 
 Example:
 
@@ -1384,19 +1323,7 @@ This means:
 
 Dataset Structure
 
-dataset/
-
-images/
-
-train/
-
-val/
-
-labels/
-
-train/
-    
-val/
+dataset/images/train/val/labels/train/val
 
 Example:
 
@@ -1457,7 +1384,6 @@ Image:
 •	2 persons 
 
 •	1 car 
-
 
 Label file:
 
@@ -2131,10 +2057,10 @@ Instance segmentation on a custom dataset involves collecting data, annotating m
 # HERE ARE THE SOME CODES WITH LITTLE THEORY ABOUT YOLO 11ns...
 
 
-**THESE CODES ARE ONLY FOR BRAIN TUMOR DETECTING**
+**THESE CODES ARE ONLY FOR BRAIN TUMOR DETECTING AND TRAINING YOUR MODELS...**
 
 
-## JSON to YOLO Annotation Converter
+# NO1) JSON to YOLO Annotation Converter
 
 **Overview**
 
@@ -2283,7 +2209,7 @@ Image width and height must be correct
 Category IDs should start from 1
 
 
-# CODD No1)
+# CODE No1=
 
 
 ```PYTHON CODE
@@ -2361,10 +2287,29 @@ convert_json_to_yolo(json_files, output_path)
 
 
 
-# CODE No2)
+# THESE ARE THE THREE IMAGES WHICH ARE USED INTO THE CODE:
+
+## IMAGE NO 1 =
+
+![Alt Text](images/mouse.jpg)
 
 
-## YOLO Model Training (Custom Dataset)
+## IMAGE NO 2 =
+
+![Alt Text](images/train2.jpg)
+
+
+## IMAGE NO 3 =
+
+![Alt Text](images/train3.jpg)
+
+
+
+
+
+
+
+# NO2) YOLO Model Training (Custom Dataset)
 
 
 **Overview**
@@ -2520,6 +2465,7 @@ Ensure dataset is properly labeled
 Adjust epochs based on dataset size
 
 
+CODE NO 2=
 ```PYTHON CODE
 
                [TRAINING THE MODEL]
@@ -2539,13 +2485,16 @@ train_results = model.train(
 ```
 
 
+# THIS IS THE FILE WHICH IS USED INTO THE CODE:
+
+
+![Alt Text](images/data.yaml)
 
 
 
-# CODE No3)
 
 
-## Theory: Loading an Image and Performing Object Detection
+# NO3) Theory: Loading an Image and Performing Object Detection
 
 This code is used to load a trained YOLO model and perform object detection on a single image. It uses the Ultralytics YOLO library to detect objects and display the results.
 
@@ -2642,6 +2591,7 @@ This code loads a trained YOLO model and performs object detection on an image, 
 
 
 
+CODE NO 3 =
 
 ```PYTHON CODE
                [LOADING THE IMAGE]
@@ -2659,5 +2609,911 @@ This code loads a trained YOLO model and performs object detection on an image, 
 )
 ```
 
+
+# THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
+
+![Alt Text](images/12.jpg)
+
+
+
+# NO4) Tumor Detection in Medical Images
+
+This script detects potential tumors in medical images using circular template matching.
+
+**Requirements**
+
+- Python 3.x
+  
+- OpenCV (cv2)
+
+- NumPy
+
+**Usage**
+
+*bash*
+
+python tumor_detection.py <image_path>
+
+Or run interactively:
+
+*bash*
+
+python tumor_detection.py
+
+*Then enter image path when prompted*
+
+**How It Works?**
+
+Reads the input image and converts it to grayscale
+
+Creates circular templates of varying radii (20-100 pixels)
+
+Uses template matching to find circular patterns
+
+Draws a red circle around detected tumors with confidence > 0.35
+
+Saves output as _output.jpg
+
+**Output**
+
+Console: Detection coordinates, radius, and confidence score
+
+File: Original image with tumor marked in red (saved as *_output.jpg)
+
+**Notes**
+
+Provide an image file path (not a folder)
+
+Supports .jpg and .png formats
+
+Adjust detection sensitivity by modifying the confidence threshold (0.35)
+
+
+
+
+# CODE NO 4 =
+
+```PYTHON CODE
+
+                     [DETECTING THE IMAGES]
+
+
+import cv2
+import numpy as np
+import sys
+import os
+
+ # Get image path from user
+ if len(sys.argv) > 1:
+     img_path = sys.argv[1]
+ else:
+     img_path = input("Enter image path: ")
+
+ # Check if path is a directory
+ if os.path.isdir(img_path):
+     print("Error: You provided a folder path. Please provide an image file path (e.g., A:/computer_Vision/images/14.jpg)")
+     exit()
+
+ # Read the image
+ img = cv2.imread(img_path)
+
+ if img is None:
+     print("Error: Could not read image from path:", img_path)
+     print("Please check that the file exists and is a valid image format (.jpg, .png, etc.)")
+     exit()
+
+ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+# Create a circular kernel/template for tumor detection
+ def create_circular_template(radius):
+     template = np.zeros((radius*2, radius*2), dtype=np.uint8)
+     cv2.circle(template, (radius, radius), radius, 255, -1)
+     return template
+
+# Try different radii for tumor detection
+ best_match = None
+ best_val = -1
+ best_radius = 0
+
+ for radius in range(20, 100, 5):
+     template = create_circular_template(radius)
+     result = cv2.matchTemplate(gray, template, cv2.TM_CCOEFF_NORMED)
+     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    
+     if max_val > best_val:
+         best_val = max_val
+         best_match = max_loc
+         best_radius = radius
+
+# Apply detection if confidence is high enough
+ if best_val > 0.35:
+     x, y = best_match
+     x += best_radius
+     y += best_radius
+     cv2.circle(img, (x, y), best_radius + 15, (0, 0, 255), 3)
+     cv2.putText(img, "Tumor", (x-30, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+     print(f"Tumor detected at: ({x}, {y}), radius: {best_radius + 15}, confidence: {best_val:.2f}")
+ else:
+     print("No tumor detected")
+
+ # Save output
+ output_path = img_path.replace(".jpg", "_output.jpg").replace(".png", "_output.jpg")
+ cv2.imwrite(output_path, img)
+ print(f"Saved: {output_path}")                           
+```
+
+
+
+# THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
+
+![Alt Text](images/14.jpg)
+
+
+
+
+
+
+
+
+
+
+
+# NO5) Image Loading and Inference with YOLOv8
+
+**Theory**
+
+YOLO (You Only Look Once) is a real-time object detection system that treats object detection as a single regression problem. Unlike traditional methods that use sliding windows or region proposals, YOLO divides the image into a grid and predicts bounding boxes and class probabilities directly in one evaluation.
+
+**How YOLO Works:**
+
+- **Single Pass**: The image passes through the neural network once to detect all objects
+
+- **Grid Division**: Image is divided into S×S grid cells
+
+- **Bounding Box Prediction**: Each cell predicts bounding boxes with confidence scores
+
+- **Class Probability**: Each cell also predicts class probabilities for detected objects
+
+**Key Advantages:**
+
+- Extremely fast (real-time detection)
+
+- Understands contextual information globally
+
+- Learns generalizable object representations
+
+**Code Implementation**
+
+*python for example:*
+
+from ultralytics import YOLO
+
+**Load pre-trained model**
+
+model = YOLO(r"A:\computer_Vision\Yolov8\runs\detect\train-3\weights\best.pt")
+
+**Run inference on image**
+
+results = model(r"A:\computer_Vision\Yolov8\demo1\test_images\15.jpg", save=True)
+
+**Display results**
+
+results[0].show()
+
+Usage Steps
+
+Load Model: Import the trained YOLOv8 model weights
+
+Run Inference: Pass image path to model for detection
+
+Save Results: Automatically saves output with detected objects
+
+Display: Visualize detection results on screen
+
+**Parameters**
+
+save=True: Automatically saves detection results to disk
+
+results[0].show(): Opens window showing image with detections
+
+**Applications**
+
+Medical image analysis
+
+Object detection in real-time video
+
+Autonomous vehicles
+
+Security surveillance
+
+
+
+
+# CODE NO 5 =
+
+```PYTHON CODE
+                       [LOADING THE IMAGE]
+
+
+ from ultralytics import YOLO
+
+ model = YOLO(r"A:\computer_Vision\Yolov8\runs\detect\train-3\weights\best.pt")
+
+ results = model(r"A:\computer_Vision\Yolov8\demo1\test_images\15.jpg",save = True)
+
+ results[0].show()
+```
+
+
+
+# THIS IS THE IMAGE WHICH IS USED INTO CODE:
+
+![Alt Text](images/15.jpg)
+
+
+
+
+
+
+
+
+
+# NO6) Brain Tumor Detection using SAM (Segment Anything Model)
+
+**Theory:**
+
+***What is SAM?**
+
+**SAM (Segment Anything Model) is a foundation model developed by Meta AI for image segmentation. Unlike traditional object detection models, SAM can segment any object in an image without specific training on that object class.**
+
+**How Tumor Detection Works in This Code:**
+
+**1 Initial Detection (Hough Circle Transform)**
+
+- **Purpose**: Locate potential tumor regions using circular pattern detection
+
+- **Method**: Hough Circle Transform identifies circular shapes in the image
+
+- **Why circles?** Brain tumors often appear as roughly circular masses in medical imaging
+
+**2 Gaussian Blurring**
+
+- Reduces noise and image artifacts
+
+- Helps Hough transform detect smoother circular patterns
+
+- Kernel size (9×9) provides optimal smoothing for medical images
+
+**3 SAM Segmentation**
+
+- Once a potential tumor is detected, SAM creates precise boundaries
+
+- Generates pixel-perfect mask of the tumor region
+
+- No training required - works out-of-the-box
+
+**4 Contour Detection**
+
+- Extracts the boundary from SAM's mask
+
+- Draws accurate tumor outline on the original image
+
+**Key Parameters Explained:**
+
+| Parameter | Value | Purpose |
+|-----------|-------|---------|
+| `dp` | 1.2 | Resolution ratio of accumulator |
+| `minDist` | 30 | Minimum distance between circles |
+| `param1` | 50 | Edge detection threshold |
+| `param2` | 30 | Circle detection sensitivity |
+| `minRadius` | 10 | Minimum tumor size |
+| `maxRadius` | 100 | Maximum tumor size |
+
+**Code Implementation:**
+
+python code for example?:
+
+import cv2
+
+import numpy as np
+
+import sys
+
+import os
+
+from ultralytics import SAM
+
+**Get image path**
+
+if len(sys.argv) > 1:
+    img_path = sys.argv[1]
+else:
+    img_path = r"A:\computer_Vision\Yolov8\demo1\test\images\7.jpg"
+
+**Read image**
+
+img = cv2.imread(img_path)
+if img is None:
+    print("Error: Cannot read image")
+    exit()
+
+**Load SAM model**
+
+model = SAM('sam_b.pt')
+
+**Tumor detection using circle detection**
+
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+blurred = cv2.GaussianBlur(gray, (9, 9), 2)
+
+circles = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, dp=1.2, minDist=30,
+                           param1=50, param2=30, minRadius=10, maxRadius=100)
+
+if circles is not None:
+    circles = np.round(circles[0, :]).astype("int")
+    x, y, r = circles[0]
+    
+   `Create bounding box for SAM`
+   
+   x1 = max(0, x - r - 10)
+  
+   y1 = max(0, y - r - 10)
+   
+   x2 = min(img.shape[1], x + r + 10)
+   
+   y2 = min(img.shape[0], y + r + 10)
+   
+   bbox = [x1, y1, x2, y2]
+    
+   **Run SAM segmentation**
+    
+   results = model(img_path, bboxes=bbox, save=False)
+    
+   if results[0].masks is not None:
+        mask = results[0].masks.data[0].cpu().numpy()
+        mask = (mask * 255).astype(np.uint8)
+        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cv2.drawContours(img, contours, -1, (0, 0, 255), 2)
+    
+   **Draw tumor marker**
+    
+   cv2.circle(img, (x, y), r, (0, 255, 0), 2)
+   
+   cv2.putText(img, "Tumor", (x-30, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+   
+   print("Tumor detected with SAM")
+
+else:
+    print("No tumor detected")
+
+**Save output**
+
+output_path = img_path.replace(".jpg", "_sam_output.jpg").replace(".png", "_sam_output.jpg")
+
+cv2.imwrite(output_path, img)
+
+print(f"Saved: {output_path}")
+
+**Advantages of This Approach**
+
+No Training Required: SAM works immediately with pre-trained weights
+
+Precise Segmentation: SAM provides pixel-perfect boundaries
+
+Fast Detection: Quick circle detection followed by refined SAM segmentation
+
+Robust: Works on various image qualities and tumor types
+
+Output
+Green circle shows initial tumor detection
+
+Red contour shows SAM's precise segmentation
+
+"Tumor" label marks the detected region
+
+Output saved as *_sam_output.jpg
+
+
+
+
+# CODE NO 6 =
+
+```PYTHON CODE
+                       [DETECTING THE BRAIN TUMOR]
+
+
+ import cv2
+ import numpy as np
+ import torch
+ import sys
+ import os
+
+ # Install required packages without git
+ # os.system('pip install opencv-python numpy torch ultralytics')
+
+ # Use Ultralytics SAM instead (no git required)
+ from ultralytics import SAM
+
+ # Get image path
+ if len(sys.argv) > 1:
+     img_path = sys.argv[1]
+ else:
+     img_path = r"A:\computer_Vision\Yolov8\demo1\test\images\7.jpg"
+
+ # Read image
+ img = cv2.imread(img_path)
+ if img is None:
+     print("Error: Cannot read image")
+     exit()
+
+ # Load SAM model from Ultralytics
+ model = SAM('sam_b.pt')
+
+ # Detect tumor using circle detection first
+ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+ blurred = cv2.GaussianBlur(gray, (9, 9), 2)
+ circles = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, dp=1.2, minDist=30,
+                            param1=50, param2=30, minRadius=10, maxRadius=100)
+
+ if circles is not None:
+     circles = np.round(circles[0, :]).astype("int")
+     x, y, r = circles[0]
+    
+     # Get bounding box around detected circle
+     x1 = max(0, x - r - 10)
+     y1 = max(0, y - r - 10)
+     x2 = min(img.shape[1], x + r + 10)
+     y2 = min(img.shape[0], y + r + 10)
+     bbox = [x1, y1, x2, y2]
+    
+     # Run SAM segmentation
+     results = model(img_path, bboxes=bbox, save=False)
+    
+     if results[0].masks is not None:
+         mask = results[0].masks.data[0].cpu().numpy()
+         mask = (mask * 255).astype(np.uint8)
+         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+         cv2.drawContours(img, contours, -1, (0, 0, 255), 2)
+    
+     cv2.circle(img, (x, y), r, (0, 255, 0), 2)
+     cv2.putText(img, "Tumor", (x-30, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+     print("Tumor detected with SAM")
+ else:
+     print("No tumor detected")
+
+ # Save output
+ output_path = img_path.replace(".jpg", "_sam_output.jpg").replace(".png", "_sam_output.jpg")
+ cv2.imwrite(output_path, img)
+ print(f"Saved: {output_path}")
+```
+
+
+
+# THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
+
+![Alt Text](images/7.jpg)
+
+
+
+
+
+
+
+
+
+
+# NO 7) YOLO Detection Results - Displaying Class Names, Confidence, and Data
+
+***Theory:***
+
+**Understanding YOLO Output Objects**
+
+When YOLO processes an image, it returns a `Results` object containing multiple detection attributes:
+
+**Key Detection Components:**
+
+| Attribute | Description | Format |
+|-----------|-------------|--------|
+| **boxes** | Bounding box coordinates | [x1, y1, x2, y2] |
+| **cls** | Class ID of detected object | Integer (0 to n-1) |
+| **conf** | Confidence score | Float (0.0 to 1.0) |
+| **id** | Track ID (for video tracking) | Integer or None |
+| **masks** | Segmentation masks | Binary array |
+| **names** | Class name mapping | Dictionary {id: name} |
+
+**Box Object Structure:**
+
+Boxes Object:
+
+├── xyxy : Tensor [x1, y1, x2, y2] (absolute coordinates)
+├── xywh : Tensor [x, y, width, height]
+├── xywhn : Tensor normalized (0-1 range)
+├── cls : Tensor [class_id]
+├── conf : Tensor [confidence_score]
+├── data : Combined tensor with all info
+└── id : Tensor [track_id] (optional)
+
+text
+
+**How to Extract Individual Values:
+
+***python for example:***
+
+**For each detection**
+
+for box in boxes:
+    class_id = int(box.cls[0])        # Class ID
+    confidence = float(box.conf[0])   # Confidence score
+    x1, y1, x2, y2 = box.xyxy[0]      # Coordinates
+    class_name = model.names[class_id] # Class name
+
+***Code Implementation***
+
+**python**
+
+from ultralytics import YOLO
+
+**Load trained model**
+
+model = YOLO(r"A:\computer_Vision\Yolov8\yolo code for pose models\runs\detect\train-3\weights\best.pt")
+
+**Run inference on image**
+
+results = model(r"A:\computer_Vision\images\12.jpg")
+
+**Display detection results**
+
+for result in results:
+    boxes = result.boxes
+    print(boxes)  # Prints all box information
+
+**Enhanced Version (For Detailed Output)**
+
+*python*
+
+from ultralytics import YOLO
+
+model = YOLO(r"A:\computer_Vision\Yolov8\yolo code for pose models\runs\detect\train-3\weights\best.pt")
+
+results = model(r"A:\computer_Vision\images\12.jpg")
+
+for result in results:
+      boxes = result.boxes
+    
+   if boxes is not None:
+       print(f"\n{'='*50}")
+       print(f"DETECTION RESULTS")
+       print(f"{'='*50}")
+        
+   for i, box in enumerate(boxes):
+         class_id = int(box.cls[0])
+         confidence = float(box.conf[0])
+         class_name = model.names[class_id]
+            
+   print(f"\nDetection #{i+1}:")
+   
+   print(f"  ├─ Class Name: {class_name}")
+   
+   print(f"  ├─ Class ID: {class_id}")
+   
+   print(f"  ├─ Confidence: {confidence:.4f} ({confidence*100:.2f}%)")
+   
+   print(f"  ├─ Bounding Box: {box.xyxy[0].tolist()}")
+   
+   print(f"  └─ Data: {box.data}")
+   
+else:
+   print("No objects detected")
+
+Sample Output Format
+
+text
+
+DETECTION RESULTS
+
+Detection #1:
+
+  ├─ Class Name: Tumor
+  
+  ├─ Class ID: 0
+  
+  ├─ Confidence: 0.8745 (87.45%)
+  
+  ├─ Bounding Box: [145.2, 98.3, 312.7, 289.4]
+  
+  └─ Data: tensor([[145.2, 98.3, 312.7, 289.4, 0.8745, 0.0000]])
+
+Detection #2:
+  
+  ├─ Class Name: Edema
+  
+  ├─ Class ID: 1
+  
+  ├─ Confidence: 0.6521 (65.21%)
+  
+  ├─ Bounding Box: [423.8, 156.2, 567.3, 298.1]
+  
+  └─ Data: tensor([[423.8, 156.2, 567.3, 298.1, 0.6521, 1.0000]])
+
+Accessing Specific Attributes
+
+python
+
+**Convert tensors to readable values**
+
+xyxy = boxes.xyxy.tolist()    # Coordinates
+
+conf = boxes.conf.tolist()      # Confidence scores
+
+cls = boxes.cls.tolist()        # Class IDs
+
+**Get all data as numpy array**
+
+data = boxes.data.numpy()
+
+print(f"Coordinates: {xyxy}")
+
+print(f"Confidence: {conf}")
+
+print(f"Class IDs: {cls}")
+
+print(f"Complete data: {data}")
+
+**Use Cases**
+
+Model Debugging: Check detection confidence thresholds
+
+Data Analysis: Track class distribution in test images
+
+Performance Metrics: Calculate mAP, precision, recall
+
+Visualization: Draw custom bounding boxes with class info
+
+
+
+# CODE NO 7 =
+
+
+
+```PYTHON CODE
+                [SHOWING THE CLASS NAME,CONF,DATA,ID...ETC]
+
+
+ from ultralytics import YOLO
+
+ model = YOLO(r"A:\computer_Vision\Yolov8\yolo code for pose models\runs\detect\train-3\weights\best.pt")
+
+ results = model(r"A:\computer_Vision\images\12.jpg")
+
+ for result in results:
+     boxes = result.boxes
+     print(boxes)
+```
+
+
+# THIS IS THE IMAGE WHCIH IS USED INTO THE CODE:
+
+
+![Alt Text](images/12.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+# NO8) YOLO Model Training
+
+**Theory**
+
+***What Happens During YOLO Training?***
+
+Training a YOLO (You Only Look Once) model involves teaching the neural network to detect objects by learning from labeled images. Here's what happens behind the scenes:
+
+**Training Process:**
+
+| Phase | Description |
+
+|-------|-------------|
+
+| **Forward Pass** | Image passes through network to predict bounding boxes & classes |
+
+| **Loss Calculation** | Compare predictions with ground truth labels |
+
+| **Backward Pass** | Calculate gradients to update network weights |
+
+| **Optimization** | Adjust weights to minimize prediction errors |
+
+***Key Training Components:***
+
+**1. Loss Functions (What the model learns to minimize):**
+
+- **Box Loss**: How accurate are bounding box coordinates?
+
+- **Class Loss**: Are object classes predicted correctly?
+
+- **Objectness Loss**: Did the model detect presence of objects?
+
+**2. Important Parameters:**
+
+| Parameter | Value | Purpose |
+
+|-----------|-------|---------|
+
+| `epochs` | 20 | Number of complete passes through dataset |
+
+| `imgsz` | 640 | Image size for training (higher = more detail) |
+
+| `device` | "cpu" | Computing hardware (cpu/cuda/gpu) |
+
+| `batch` | 16 (default) | Images processed before weight update |
+
+| `lr` | 0.01 (default) | Learning rate (step size for optimization) |
+
+**Training Workflow:**
+
+Dataset (images + labels)
+
+↓
+
+Split into:
+
+├── Training Set (80%)
+
+├── Validation Set (10%)
+
+└── Test Set (10%)
+
+↓
+
+Data Augmentation
+
+(rotate, flip, scale, crop)
+
+↓
+
+Batch Processing
+
+(16 images at a time)
+
+↓
+
+Model Forward Pass
+
+↓
+
+Calculate Loss
+
+↓
+
+Backward Pass & Update Weights
+
+↓
+
+Repeat for E epochs
+
+↓
+
+Save Best Weights
+
+text
+
+**Data.yaml Structure Required:**
+
+```yaml
+# data.yaml example
+train: /path/to/train/images
+val: /path/to/val/images
+test: /path/to/test/images
+
+nc: 2  # number of classes
+names: ['tumor', 'edema']  # class names
+Code Implementation
+python
+from ultralytics import YOLO
+
+# Load a pre-trained model
+model = YOLO("yolo11n.pt")  # 'n' = nano version (fastest/lightest)
+
+# Train the model
+train_results = model.train(
+    data=r"A:\computer_Vision\Yolov8\demo1\data.yaml",  # dataset configuration
+    epochs=20,        # number of training epochs
+    imgsz=640,        # input image size
+    device="cpu",     # compute device (change to "cuda" if GPU available)
+)
+Enhanced Training with More Options
+python
+from ultralytics import YOLO
+
+model = YOLO("yolo11n.pt")
+
+results = model.train(
+    # Required parameters
+    data="data.yaml",        # Dataset config file
+    epochs=20,               # Training iterations
+    
+    # Optional but recommended
+    imgsz=640,               # Image size
+    batch=16,                # Batch size (adjust based on memory)
+    device="cpu",            # "cuda:0" for GPU, "cpu" for CPU
+    
+    # Advanced settings
+    lr0=0.01,               # Initial learning rate
+    momentum=0.937,          # SGD momentum
+    weight_decay=0.0005,     # Regularization
+    
+    # Augmentation
+    hsv_h=0.015,             # Hue augmentation
+    hsv_s=0.7,               # Saturation augmentation
+    hsv_v=0.4,               # Value augmentation
+    degrees=0.0,             # Rotation degrees
+    translate=0.1,           # Translation
+    scale=0.5,               # Scaling
+    
+    # Saving & logging
+    project="my_training",   # Project name
+    name="exp1",             # Experiment name
+    exist_ok=True,           # Overwrite existing folder
+    save=True,               # Save checkpoints
+    save_period=5,           # Save every 5 epochs
+)
+Training Outputs
+After training, you'll get:
+
+text
+runs/detect/train/
+├── weights/
+│   ├── best.pt      # Best model weights
+│   └── last.pt      # Final epoch weights
+├── results.png      # Training metrics graph
+├── confusion_matrix.png
+├── F1_curve.png
+├── PR_curve.png
+└── labels.jpg       # Sample labels visualization
+Training Metrics to Monitor
+Metric	What It Means	Good Value
+box_loss	Bounding box accuracy	Decreasing
+cls_loss	Classification accuracy	Decreasing
+mAP50	Mean Avg Precision at IoU=0.5	>0.8
+mAP50-95	mAP across IoU thresholds	>0.5
+Precision	Accuracy of positive predictions	>0.8
+Recall	Ability to find all objects	>0.8
+```
+
+
+
+# CODE NO 8
+
+
+```PYTHON CODE
+                          [TRAINING MODEL]
+
+
+ from ultralytics import YOLO
+
+ # Load a model
+ model = YOLO("yolo11n.pt")
+
+ # Train the model
+ train_results = model.train(
+     data= r"A:\computer_Vision\Yolov8\demo1\data.yaml",  # path to dataset YAML
+     epochs=20,  # number of training epochs
+     imgsz=640,  # training image size
+     device="cpu",  # device to run on, i.e. device=0 or device=0,1,2,3 or device=cpu
+)
+```
+
+
+
+# THIS IS THE FILE WHICH IS USED INTO THE CODE:
+
+![Alt Text](images/data.yaml)
 
 
