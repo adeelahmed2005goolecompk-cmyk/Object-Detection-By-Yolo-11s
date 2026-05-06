@@ -1242,8 +1242,6 @@ if not ret:
     
   break
 
-
-
 results = model(frame)
     
 annotated = results[0].plot()
@@ -2209,7 +2207,7 @@ Image width and height must be correct
 Category IDs should start from 1
 
 
-# CODE No1=
+# CODE No 1
 
 
 ```PYTHON CODE
@@ -2289,19 +2287,19 @@ convert_json_to_yolo(json_files, output_path)
 
 # THESE ARE THE THREE IMAGES WHICH ARE USED INTO THE CODE:
 
-## IMAGE NO 1 =
+## IMAGE NO 1 
 
-![Alt Text](images/mouse.jpg)
-
-
-## IMAGE NO 2 =
-
-![Alt Text](images/train2.jpg)
+![Alt Text](main/mouse.jpg)
 
 
-## IMAGE NO 3 =
+## IMAGE NO 2 
 
-![Alt Text](images/train3.jpg)
+![Alt Text](main/train2.jpg)
+
+
+## IMAGE NO 3 
+
+![Alt Text](main/train3.jpg)
 
 
 
@@ -2465,7 +2463,7 @@ Ensure dataset is properly labeled
 Adjust epochs based on dataset size
 
 
-CODE NO 2=
+CODE NO 2
 ```PYTHON CODE
 
                [TRAINING THE MODEL]
@@ -2488,7 +2486,7 @@ train_results = model.train(
 # THIS IS THE FILE WHICH IS USED INTO THE CODE:
 
 
-![Alt Text](images/data.yaml)
+![Alt Text](main/data.yaml)
 
 
 
@@ -2591,7 +2589,7 @@ This code loads a trained YOLO model and performs object detection on an image, 
 
 
 
-CODE NO 3 =
+CODE NO 3 
 
 ```PYTHON CODE
                [LOADING THE IMAGE]
@@ -2612,7 +2610,7 @@ CODE NO 3 =
 
 # THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
 
-![Alt Text](images/12.jpg)
+![Alt Text](main/12.jpg)
 
 
 
@@ -2671,7 +2669,7 @@ Adjust detection sensitivity by modifying the confidence threshold (0.35)
 
 
 
-# CODE NO 4 =
+# CODE NO 4
 
 ```PYTHON CODE
 
@@ -2746,7 +2744,7 @@ import os
 
 # THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
 
-![Alt Text](images/14.jpg)
+![Alt Text](main/14.jpg)
 
 
 
@@ -2829,7 +2827,7 @@ Security surveillance
 
 
 
-# CODE NO 5 =
+# CODE NO 5
 
 ```PYTHON CODE
                        [LOADING THE IMAGE]
@@ -2848,7 +2846,7 @@ Security surveillance
 
 # THIS IS THE IMAGE WHICH IS USED INTO CODE:
 
-![Alt Text](images/15.jpg)
+![Alt Text](main/15.jpg)
 
 
 
@@ -3017,7 +3015,7 @@ Output saved as *_sam_output.jpg
 
 
 
-# CODE NO 6 =
+# CODE NO 6
 
 ```PYTHON CODE
                        [DETECTING THE BRAIN TUMOR]
@@ -3092,7 +3090,7 @@ Output saved as *_sam_output.jpg
 
 # THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
 
-![Alt Text](images/7.jpg)
+![Alt Text](main/7.jpg)
 
 
 
@@ -3272,7 +3270,7 @@ Visualization: Draw custom bounding boxes with class info
 
 
 
-# CODE NO 7 =
+# CODE NO 7
 
 
 
@@ -3295,7 +3293,7 @@ Visualization: Draw custom bounding boxes with class info
 # THIS IS THE IMAGE WHCIH IS USED INTO THE CODE:
 
 
-![Alt Text](images/12.jpg)
+![Alt Text](main/12.jpg)
 
 
 
@@ -3514,6 +3512,6 @@ Recall	Ability to find all objects	>0.8
 
 # THIS IS THE FILE WHICH IS USED INTO THE CODE:
 
-![Alt Text](images/data.yaml)
+![Alt Text](main/data.yaml)
 
 
