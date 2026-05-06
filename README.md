@@ -2289,17 +2289,17 @@ convert_json_to_yolo(json_files, output_path)
 
 ## IMAGE NO 1 
 
-![Alt Text](image/mouse.jpg)
+![Alt Text](12.jpg)
 
 
 ## IMAGE NO 2 
 
-![Alt Text](image/train2.jpg)
+![Alt Text](train2.jpg)
 
 
 ## IMAGE NO 3 
 
-![Alt Text](image/train3.jpg)
+![Alt Text](train3.jpg)
 
 
 
@@ -2486,7 +2486,7 @@ train_results = model.train(
 # THIS IS THE FILE WHICH IS USED INTO THE CODE:
 
 
-![Alt Text](main/data.yaml)
+![Alt Text](data.yaml)
 
 
 
@@ -2610,7 +2610,7 @@ CODE NO 3
 
 # THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
 
-![Alt Text](main/12.jpg)
+![Alt Text](12.jpg)
 
 
 
@@ -2744,7 +2744,7 @@ import os
 
 # THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
 
-![Alt Text](main/14.jpg)
+![Alt Text](14.jpg)
 
 
 
@@ -2846,7 +2846,7 @@ Security surveillance
 
 # THIS IS THE IMAGE WHICH IS USED INTO CODE:
 
-![Alt Text](main/15.jpg)
+![Alt Text](15.jpg)
 
 
 
@@ -3090,7 +3090,7 @@ Output saved as *_sam_output.jpg
 
 # THIS IS THE IMAGE WHICH IS USED INTO THE CODE:
 
-![Alt Text](main/7.jpg)
+![Alt Text](7.jpg)
 
 
 
@@ -3293,7 +3293,7 @@ Visualization: Draw custom bounding boxes with class info
 # THIS IS THE IMAGE WHCIH IS USED INTO THE CODE:
 
 
-![Alt Text](main/12.jpg)
+![Alt Text](12.jpg)
 
 
 
@@ -3512,5 +3512,5 @@ Recall	Ability to find all objects	>0.8
 
 # THIS IS THE FILE WHICH IS USED INTO THE CODE:
 
-![Alt Text](main/data.yaml)
+![Alt Text](data.yaml)
 
