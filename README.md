@@ -2294,12 +2294,12 @@ convert_json_to_yolo(json_files, output_path)
 
 ## IMAGE NO 2 
 
-![Alt Text](train2.jpg)
+![Alt Text](train 2.jpg)
 
 
 ## IMAGE NO 3 
 
-![Alt Text](train3.jpg)
+![Alt Text](train 3.jpg)
 
 
 
